@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mono';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Mono';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype');
+}
+
+
+
+
+@theme {
+  /* Custom Font */
+  --font-roboto: 'Roboto', sans-serif;
+  --font-mono: 'Mono', monospace;
+
+  /* Primary and Secondary Colors */
+  --color-primary-50: #f5faff;
+  --color-primary-100: #e0f0ff;
+  --color-primary-200: #b8dfff;
+  --color-primary-300: #8fcfff;
+  --color-primary-400: #66bfff;
+  --color-primary-500: #3eaeff;
+  --color-primary-600: #1e9eff;
+  --color-primary-700: #007eff;
+  --color-primary-700: #007eff;
+  --color-primary-800: #0066cc;
+  --color-primary-900: #004c99;
+
+  --color-secondary-50: #fff5f5;
+  --color-secondary-100: #ffe0e0;
+  --color-secondary-200: #ffb8b8;
+  --color-secondary-300: #ff8f8f;
+  --color-secondary-400: #ff6666;
+  --color-secondary-500: #ff3e3e;
+  --color-secondary-600: #ff1e1e;
+  --color-secondary-700: #ff0000;
+  --color-secondary-800: #cc0000;
+  --color-secondary-900: #990000;
+}
