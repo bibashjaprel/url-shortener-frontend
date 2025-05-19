@@ -11,8 +11,16 @@ export default function ShortenForm({ onShortened }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ originalUrl }),
     });
+
     const data = await res.json();
-    onShortened(data.shortUrl);
+
+    if (!res.ok) {
+      onShortened(data)
+      return;
+    }
+
+
+    onShortened(null, data.shortUrl);
     setOriginalUrl("");
   };
 

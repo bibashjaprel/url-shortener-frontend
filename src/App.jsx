@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+} from "@clerk/clerk-react";
 
 import ShortenForm from "./components/ShortenForm";
 import ShortenedUrl from "./components/ShortenedUrl";
@@ -12,27 +16,39 @@ export default function App() {
   const [shortUrl, setShortUrl] = useState("");
   const [recentUrls, setRecentUrls] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const fetchRecent = async () => {
+  const fetchRecentUrls = async () => {
     try {
-      const res = await fetch(`${CONFIG.API_BASE_URL}/recent-shortened`);
-      if (!res.ok) throw new Error("Failed to fetch recent URLs.");
-      const data = await res.json();
+      const response = await fetch(`${CONFIG.API_BASE_URL}/recent-shortened`);
+      if (!response.ok) throw new Error("Failed to fetch recent URLs.");
+      const data = await response.json();
       setRecentUrls(data);
-    } catch (error) {
-      console.error("Error fetching recent URLs:", error.message);
+    } catch (err) {
+      console.error("Error fetching recent URLs:", err.message);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchRecent();
+    fetchRecentUrls();
   }, []);
+
+  const handleShorten = (err, data) => {
+    if (err) {
+      setError(err.message);
+      return;
+    }
+    setShortUrl(data);
+    fetchRecentUrls();
+  };
 
   return (
     <>
       <Navbar />
+
       <main className="flex flex-col items-center justify-center min-h-screen px-4 py-10 bg-zinc-800 text-white font-roboto">
         <section className="text-center max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-bold font-mono text-blue-400 mb-4">
@@ -44,12 +60,7 @@ export default function App() {
         </section>
 
         <SignedIn>
-          <ShortenForm
-            onShortened={(url) => {
-              setShortUrl(url);
-              fetchRecent();
-            }}
-          />
+          <ShortenForm onShortened={handleShorten} />
         </SignedIn>
 
         <SignedOut>
@@ -67,12 +78,17 @@ export default function App() {
 
         <ShortenedUrl shortUrl={shortUrl} />
 
+        {error && (
+          <p className="mt-6 text-red-500">{error}</p>
+        )}
+
         {loading ? (
           <p className="mt-6 text-gray-400">Loading recent URLs...</p>
         ) : (
           <RecentUrls urls={recentUrls} />
         )}
       </main>
+
       <Footer />
     </>
   );
